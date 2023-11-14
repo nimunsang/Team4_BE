@@ -127,3 +127,5 @@ INSERT INTO likereview_tb(review_id, user_id)VALUES (7, 2);
 INSERT INTO coin_tb(id, user_id, balance) VALUES (1, 1, 10);
 INSERT INTO coin_tb(id, user_id, balance) VALUES (2, 2, 10);
 INSERT INTO coin_tb(id, user_id, balance) VALUES (3, 3, 10);
+
+INSERT INTO order_sequence_tb(id, sequence) VALUES(1, 1);

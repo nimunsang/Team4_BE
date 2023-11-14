@@ -23,6 +23,7 @@ public class StoreService {
     private final UserService userService;
     private final LikeStoreService likeStoreService;
     private final StoreJPARepository storeJPARepository;
+    private final SubCategoryRepository subCategoryRepository;
     private final EntityManager entityManager;
     private static final int PAGE_SIZE_PLUS_ONE = 5 + 1;
 
@@ -176,5 +177,23 @@ public class StoreService {
 
     private List<Store> getStoreListByReviews(String search, Integer cursor, Long lastId, Pageable pageable) {
         return storeJPARepository.findAllBySearchAndNumsOfReviewLessThanCursor(search, cursor, lastId, pageable);
+    }
+
+    @Transactional
+    public void addStore(StoreRequest storeRequest) {
+        Store store = Store.builder()
+                .subCategory(subCategoryRepository.findById(storeRequest.getSubCategoryId()).orElseThrow(
+                        () -> new NoSuchElementException("존재하지 않는 카테고리ID입니다.")
+                ))
+                .name(storeRequest.getName())
+                .address(storeRequest.getAddress())
+                .storeImageUrl(storeRequest.getStoreImageUrl())
+                .businessHours(storeRequest.getBusinessHours())
+                .phoneNumber(storeRequest.getPhoneNumber())
+                .latitude(storeRequest.getLatitude())
+                .longitude(storeRequest.getLongitude())
+                .build();
+
+        storeJPARepository.save(store);
     }
 }
