@@ -22,12 +22,6 @@ public class StoreRestController {
     private final StoreService storeService;
     private final GetRecentlyReviewedStoresUseCase getRecentlyReviewedStoresUseCase;
 
-    @PostMapping("")
-    public ResponseEntity<?> addStore(@RequestBody StoreRequest storeRequest) {
-        storeService.addStore(storeRequest);
-        return ResponseEntity.ok(ApiUtils.success("success"));
-    }
-
     @GetMapping("/{storeId}")
     public ResponseEntity<?> findById(@PathVariable Long storeId) {
         StoreResponse.FindByIdStoreDTO responseDTO = storeService.getStoreDtoById(storeId);

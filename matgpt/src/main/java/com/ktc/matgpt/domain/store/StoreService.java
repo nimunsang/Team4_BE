@@ -180,20 +180,36 @@ public class StoreService {
     }
 
     @Transactional
-    public void addStore(StoreRequest storeRequest) {
+    public void addStore(StoreRequest.AddStoreDto addStoreDto) {
         Store store = Store.builder()
-                .subCategory(subCategoryRepository.findById(storeRequest.getSubCategoryId()).orElseThrow(
+                .subCategory(subCategoryRepository.findById(addStoreDto.getSubCategoryId()).orElseThrow(
                         () -> new NoSuchElementException("존재하지 않는 카테고리ID입니다.")
                 ))
-                .name(storeRequest.getName())
-                .address(storeRequest.getAddress())
-                .storeImageUrl(storeRequest.getStoreImageUrl())
-                .businessHours(storeRequest.getBusinessHours())
-                .phoneNumber(storeRequest.getPhoneNumber())
-                .latitude(storeRequest.getLatitude())
-                .longitude(storeRequest.getLongitude())
+                .name(addStoreDto.getName())
+                .address(addStoreDto.getAddress())
+                .storeImageUrl(addStoreDto.getStoreImageUrl())
+                .businessHours(addStoreDto.getBusinessHours())
+                .phoneNumber(addStoreDto.getPhoneNumber())
+                .latitude(addStoreDto.getLatitude())
+                .longitude(addStoreDto.getLongitude())
                 .build();
 
         storeJPARepository.save(store);
+    }
+
+    @Transactional
+    public void updateStoreName(Long storeId, StoreRequest.UpdateStoreNameDto updateStoreNameDto) {
+        Store store = storeJPARepository.findById(storeId).orElseThrow(
+                () -> new NoSuchElementException(ErrorMessage.STORE_NOT_FOUND)
+        );
+        store.setName(updateStoreNameDto.getName());
+    }
+
+    @Transactional
+    public void updateStoreImageUrl(Long storeId, StoreRequest.UpdateStoreImageDto updateStoreImageDto) {
+        Store store = storeJPARepository.findById(storeId).orElseThrow(
+                () -> new NoSuchElementException(ErrorMessage.STORE_NOT_FOUND)
+        );
+        store.setStoreImageUrl(updateStoreImageDto.getImageUrl());
     }
 }
