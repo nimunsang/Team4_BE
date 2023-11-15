@@ -1,5 +1,7 @@
 package com.ktc.matgpt.domain.review;
 
+import com.ktc.matgpt.domain.coin.dto.CoinRequest;
+import com.ktc.matgpt.domain.coin.service.CoinService;
 import com.ktc.matgpt.domain.review.dto.ReviewResponse;
 import com.ktc.matgpt.exception.ErrorMessage;
 import com.ktc.matgpt.exception.auth.UnAuthorizedException;
@@ -50,6 +52,7 @@ public class ReviewService {
     private final UserService userService;
     private final StoreService storeService;
     private final LikeReviewService likeReviewService;
+    private final CoinService coinService;
     private final MessageSourceAccessor messageSourceAccessor;
     private final EntityManager entityManager;
 
@@ -73,6 +76,8 @@ public class ReviewService {
             Image image = imageService.saveImageForReview(review, imageDTO.getImageUrl()); // 이미지 생성 및 리뷰에 매핑하여 저장
             saveTagsForImage(image, imageDTO, storeRef); // 태그 저장
         }
+
+        coinService.earnCoin(review.getUser().getId(), new CoinRequest.EarnCoinDto(20));
     }
 
     // 리뷰 생성 메서드

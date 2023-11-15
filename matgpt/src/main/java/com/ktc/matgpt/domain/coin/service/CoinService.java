@@ -30,6 +30,8 @@ public class CoinService {
     @Transactional
     public void createCoin(User user) {
         Coin coin = Coin.create(user);
+        CoinEarningHistory coinEarningHistory = CoinEarningHistory.create(coin, 100);
+        coinHistoryService.save(coinEarningHistory);
         coinRepository.save(coin);
     }
 
