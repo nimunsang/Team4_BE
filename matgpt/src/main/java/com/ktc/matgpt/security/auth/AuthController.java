@@ -6,6 +6,7 @@ import com.ktc.matgpt.security.dto.TokenDto;
 import com.ktc.matgpt.domain.user.service.UserService;
 import com.ktc.matgpt.utils.ApiUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,13 +21,13 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody AuthDto.DefaultRequest defaultRequest) {
+    public ResponseEntity<?> signup(@RequestBody @Valid AuthDto.DefaultRequest defaultRequest) {
         authService.signup(defaultRequest);
         return ResponseEntity.ok(ApiUtils.success(authService.login(defaultRequest)));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthDto.DefaultRequest defaultRequest) {
+    public ResponseEntity<?> login(@RequestBody @Valid AuthDto.DefaultRequest defaultRequest) {
         return ResponseEntity.ok(ApiUtils.success(authService.login(defaultRequest)));
     }
 
