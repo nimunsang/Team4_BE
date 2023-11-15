@@ -30,6 +30,12 @@ public class UserController {
         return ResponseEntity.ok(ApiUtils.success(UserDto.Response.toDto(userService.findByEmail(userPrincipal.getEmail()))));
     }
 
+    @PostMapping("/info")
+    public ResponseEntity<?> setUserInfo(@RequestBody UserDto.Request userDto, @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        userService.updateUserAdditionalInfo(userPrincipal.getEmail(),userDto);
+        return ResponseEntity.ok(ApiUtils.success("유저프로필 업데이트 완료"));
+    }
+
     @PutMapping("/info")
     public ResponseEntity<?> editUserInfo(@RequestBody UserDto.Request userDto, @AuthenticationPrincipal UserPrincipal userPrincipal) {
         userService.updateUserAdditionalInfo(userPrincipal.getEmail(),userDto);
