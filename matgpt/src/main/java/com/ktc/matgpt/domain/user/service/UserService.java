@@ -60,7 +60,7 @@ public class UserService {
         user.setGender(Gender.fromString(userDto.getGender()));
         user.setAgeGroup(AgeGroup.fromInt(userDto.getAge()));
 
-        LocaleEnum localeEnum = LocaleEnum.fromString(userDto.getLocale());
+        LocaleEnum localeEnum = LocaleEnum.fromString(userDto.getLocale().toUpperCase());
         if (localeEnum != null) {
             user.setLocale(localeEnum);
         } else {
