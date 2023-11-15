@@ -22,7 +22,7 @@ public class UserDto {
         private String nickname;
         private String gender;
         private int age;
-        private String locale;
+        private String language;
     }
     @Getter
     @NoArgsConstructor
@@ -43,7 +43,7 @@ public class UserDto {
         private String profileImageUrl;
         private String gender;
         private String age;
-        private String locale;
+        private String language;
         public static UserDto.Response toDto(User user){
             return new UserDto.Response(
                     user.getEmail(),
