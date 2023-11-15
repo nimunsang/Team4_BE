@@ -51,9 +51,9 @@ public class ReviewRestController {
     public ResponseEntity<?> findAllByStoreId(@PathVariable Long storeId,
                                               @RequestParam(defaultValue = "latest") String sortBy,
                                               @RequestParam(required = false) Long cursorId,
-                                              @RequestParam(required = false) Integer cursor
+                                              @RequestParam(required = false) Integer cursorLikes
     ) {
-        PageResponse<?, ReviewResponse.StoreReviewDTO> responseDTO = reviewService.findPageByStoreId(storeId, sortBy, cursorId, cursor);
+        PageResponse<?, ReviewResponse.StoreReviewDTO> responseDTO = reviewService.findPageByStoreId(storeId, sortBy, cursorId, cursorLikes);
         return ResponseEntity.ok(com.ktc.matgpt.utils.ApiUtils.success(responseDTO));
     }
 
