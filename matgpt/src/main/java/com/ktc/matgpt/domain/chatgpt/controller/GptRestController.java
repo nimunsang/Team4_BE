@@ -60,7 +60,7 @@ public class GptRestController {
 //    }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/prompt/{promptId}")
+    @GetMapping("/prompt/{promptId}")
     public ResponseEntity<?> getOrderGuidance(@AuthenticationPrincipal UserPrincipal userPrincipal) throws ExecutionException, InterruptedException {
         String content = gptOrderGuidanceService.getOrderGuidance(userPrincipal.getId());
         return ResponseEntity.ok().body(ApiUtils.success(content));
