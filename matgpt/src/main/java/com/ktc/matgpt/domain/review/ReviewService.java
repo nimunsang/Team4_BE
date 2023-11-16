@@ -59,6 +59,7 @@ public class ReviewService {
     private static final int DEFAULT_PAGE_SIZE = 8;
     private static final int DEFAULT_PAGE_SIZE_PLUS_ONE = DEFAULT_PAGE_SIZE + 1;
     private static final PageResponse EMPTY_PAGE_RESPONSE = new PageResponse<>(new Paging<>(false, 0, null, null), null);
+    public static final int REVIEW_WRITE_COIN = 100;
 
     @Transactional
     public void completeReviewUpload(Long storeId, Long reviewId, ReviewRequest.CreateCompleteDTO requestDTO, String userEmail) {
@@ -77,7 +78,7 @@ public class ReviewService {
             saveTagsForImage(image, imageDTO, storeRef); // 태그 저장
         }
 
-        coinService.earnCoin(review.getUser().getId(), new CoinRequest.EarnCoinDto(20));
+        coinService.earnCoin(review.getUser().getId(), new CoinRequest.EarnCoinDto(REVIEW_WRITE_COIN));
     }
 
     // 리뷰 생성 메서드

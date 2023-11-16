@@ -24,7 +24,7 @@ public class Coin {
 
     public Coin(User user) {
         this.user = user;
-        this.balance = 100;
+        this.balance = 1000;
     }
 
     public static Coin create(User user) {
