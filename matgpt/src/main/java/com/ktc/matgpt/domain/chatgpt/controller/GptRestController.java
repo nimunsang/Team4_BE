@@ -60,11 +60,18 @@ public class GptRestController {
 //    }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/gpt/order")
-    public ResponseEntity<?> getOrderGuidance(@AuthenticationPrincipal UserPrincipal userPrincipal) {
-        List<GptOrderGuidanceResponseDto> GptOrderGuidanceResponseDtos = gptOrderGuidanceService.getOrderGuidances(userPrincipal.getId());
-        return ResponseEntity.ok().body(ApiUtils.success(GptOrderGuidanceResponseDtos));
+    @PostMapping("/prompt/{promptId}")
+    public ResponseEntity<?> getOrderGuidance(@AuthenticationPrincipal UserPrincipal userPrincipal) throws ExecutionException, InterruptedException {
+        String content = gptOrderGuidanceService.getOrderGuidance(userPrincipal.getId());
+        return ResponseEntity.ok().body(ApiUtils.success(content));
     }
+
+//    @PreAuthorize("isAuthenticated()")
+//    @GetMapping("/gpt/order")
+//    public ResponseEntity<?> getOrderGuidance(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+//        List<GptOrderGuidanceResponseDto> GptOrderGuidanceResponseDtos = gptOrderGuidanceService.getOrderGuidances(userPrincipal.getId());
+//        return ResponseEntity.ok().body(ApiUtils.success(GptOrderGuidanceResponseDtos));
+//    }
 
     // 테스트 전용 API 입니다. 실제로 이 API는 사용되지 않습니다. 리뷰 요약 동작은 Cron을 이용해서만 동작합니다.
     @Timer
