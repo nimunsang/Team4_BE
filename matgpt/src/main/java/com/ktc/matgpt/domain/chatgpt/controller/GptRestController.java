@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("")
+@RequestMapping("/gpt")
 @RestController
 public class GptRestController {
 
@@ -35,7 +35,7 @@ public class GptRestController {
     private final GptOrderGuidanceService gptOrderGuidanceService;
     private final GptReviewSummaryService gptReviewSummaryService;
 
-    @GetMapping("/gpt/stores/{storeId}/review")
+    @GetMapping("/stores/{storeId}/review")
     public ResponseEntity<?> getReviewSummarys(@PathVariable Long storeId) {
         GptReviewSummaryResponseDto<Map<String, String>> gptReviewSummaryResponseDto = gptReviewSummaryService.findReviewSummaryByStoreId(storeId);
         return ResponseEntity.ok().body(ApiUtils.success(gptReviewSummaryResponseDto));
@@ -43,25 +43,15 @@ public class GptRestController {
 
     @Timer
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/stores/{storeId}/reviews/{reviewId}/create-prompt")
-    public ResponseEntity<?> generateOrderGuidance(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                                                   @PathVariable Long storeId,
-                                                   @PathVariable Long reviewId) throws ExecutionException, InterruptedException {
+    @PostMapping("/order")
+    public ResponseEntity<?> generateOrderGuidance(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         String content = gptOrderGuidanceService.generateOrderGuidance(userPrincipal.getId());
         return ResponseEntity.ok().body(ApiUtils.success(content));
     }
 
-//    @Timer
-//    @PreAuthorize("isAuthenticated()")
-//    @PostMapping("/gpt/order")
-//    public ResponseEntity<?> generateOrderGuidance(@AuthenticationPrincipal UserPrincipal userPrincipal) throws ExecutionException, InterruptedException {
-//        String content = gptOrderGuidanceService.generateOrderGuidance(userPrincipal.getId());
-//        return ResponseEntity.ok().body(ApiUtils.success(content));
-//    }
-
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/prompt/{promptId}")
-    public ResponseEntity<?> getOrderGuidance(@AuthenticationPrincipal UserPrincipal userPrincipal) throws ExecutionException, InterruptedException {
+    @GetMapping("/order")
+    public ResponseEntity<?> getOrderGuidance(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         String content = gptOrderGuidanceService.getOrderGuidance(userPrincipal.getId());
         return ResponseEntity.ok().body(ApiUtils.success(content));
     }
