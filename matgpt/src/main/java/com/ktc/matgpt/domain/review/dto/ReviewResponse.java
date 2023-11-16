@@ -65,7 +65,7 @@ public class ReviewResponse {
             this.totalPrice = review.getTotalPrice();
             this.averageCostPerPerson = review.getCostPerPerson();
             this.createdAt = relativeTime;
-            if (review.getCreatedAt() != review.getUpdatedAt()) this.updated = true;
+//            if (review.getCreatedAt() != review.getUpdatedAt()) this.updated = true;
             this.owner = owner;
         }
 
@@ -136,7 +136,7 @@ public class ReviewResponse {
             this.relativeTime = relativeTime;
             this.numOfLikes = review.getRecommendCount();
 
-            if (review.getCreatedAt() != review.getUpdatedAt()) this.updated = true;
+//            if (review.getCreatedAt() != review.getUpdatedAt()) this.updated = true;
         }
     }
 
@@ -165,7 +165,7 @@ public class ReviewResponse {
                 this.storeImage = review.getStore().getStoreImageUrl();
                 this.storeName = review.getStore().getName();
                 this.relativeTime = relativeTime;
-                if (review.getCreatedAt() != review.getUpdatedAt()) this.updated = true;
+//                if (review.getCreatedAt() != review.getUpdatedAt()) this.updated = true;
                 this.numOfLikes = review.getRecommendCount();
                 this.peopleCount = review.getPeopleCount();
         }
