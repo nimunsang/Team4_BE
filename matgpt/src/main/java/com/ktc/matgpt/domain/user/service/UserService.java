@@ -54,13 +54,32 @@ public class UserService {
         return userRepository.findAllByAgeGroupAndGender(ageGroup, gender);
     }
 
-    public void updateUserAdditionalInfo(String email, UserDto.Request userDto) {
+    @Transactional
+    public void setUserAdditionalInfo(String email, UserDto.SetUserInfoDto setUserInfoDto) {
         User user = findByEmail(email);
-        user.setName(userDto.getNickname());
-        user.setGender(Gender.fromString(userDto.getGender()));
-        user.setAgeGroup(AgeGroup.fromInt(userDto.getAge()));
+        user.setName(setUserInfoDto.getNickname());
+        user.setGender(Gender.fromString(setUserInfoDto.getGender()));
+        user.setAgeGroup(AgeGroup.fromInt(setUserInfoDto.getAge()));
 
-        LocaleEnum localeEnum = LocaleEnum.fromString(userDto.getLanguage().toUpperCase());
+        LocaleEnum localeEnum = LocaleEnum.fromString(setUserInfoDto.getLocale().toUpperCase());
+        if (localeEnum != null) {
+            user.setLocale(localeEnum);
+        } else {
+            throw new NoSuchElementException(ErrorMessage.LOCALE_NOT_FOUND);
+        }
+
+        userRepository.save(user);
+
+    }
+
+    @Transactional
+    public void editUserAdditionalInfo(String email, UserDto.EditUserInfoDto editUserInfoDto) {
+        User user = findByEmail(email);
+        user.setName(editUserInfoDto.getNickname());
+        user.setGender(Gender.fromString(editUserInfoDto.getGender()));
+        user.setAgeGroup(AgeGroup.fromInt(editUserInfoDto.getAge()));
+
+        LocaleEnum localeEnum = LocaleEnum.fromString(editUserInfoDto.getLanguage().toUpperCase());
         if (localeEnum != null) {
             user.setLocale(localeEnum);
         } else {

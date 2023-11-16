@@ -18,12 +18,24 @@ public class UserDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class Request {
+    public static class SetUserInfoDto {
+        private String nickname;
+        private String gender;
+        private int age;
+        private String locale;
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class EditUserInfoDto {
         private String nickname;
         private String gender;
         private int age;
         private String language;
     }
+
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor

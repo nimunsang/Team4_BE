@@ -31,14 +31,14 @@ public class UserController {
     }
 
     @PostMapping("/info")
-    public ResponseEntity<?> setUserInfo(@RequestBody UserDto.Request userDto, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-        userService.updateUserAdditionalInfo(userPrincipal.getEmail(),userDto);
+    public ResponseEntity<?> setUserInfo(@RequestBody UserDto.SetUserInfoDto setUserInfoDto, @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        userService.setUserAdditionalInfo(userPrincipal.getEmail(),setUserInfoDto);
         return ResponseEntity.ok(ApiUtils.success("유저프로필 업데이트 완료"));
     }
 
     @PutMapping("/info")
-    public ResponseEntity<?> editUserInfo(@RequestBody UserDto.Request userDto, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-        userService.updateUserAdditionalInfo(userPrincipal.getEmail(),userDto);
+    public ResponseEntity<?> editUserInfo(@RequestBody UserDto.EditUserInfoDto editUserInfoDto, @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        userService.editUserAdditionalInfo(userPrincipal.getEmail(),editUserInfoDto);
         return ResponseEntity.ok(ApiUtils.success("유저프로필 업데이트 완료"));
     }
 
